@@ -1,9 +1,10 @@
 package tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll;
 
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.employee.Employee;
-import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.paymentConcept.PaymentConcept;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.PaymentConcept;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.PaymentPeriod;
+
 import java.math.BigDecimal;
-import java.time.YearMonth;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -16,24 +17,24 @@ public class PayrollFactoryImpl implements PayrollFactory {
 
 
 
-    private final int FLAG_SALARY = 0;
+    private static final int FLAG_SALARY = 0;
 
     @Override
-    public IPayroll create(Employee employee, YearMonth period, List<PaymentConcept> paymentConcepts, BigDecimal netSalary) throws PayrollException {
+    public IPayroll create(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts, BigDecimal netSalary) throws PayrollException {
 
         this.validate(employee, period, paymentConcepts, netSalary);
         return new PayrollImpl(employee, period, paymentConcepts, netSalary);
     }
 
     @Override
-    public IPayroll create(Employee employee, YearMonth period, List<PaymentConcept> paymentConcepts) throws PayrollException {
+    public IPayroll create(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts) throws PayrollException {
 
         BigDecimal netSalary = BigDecimal.ZERO;
         this.validate(employee, period, paymentConcepts, netSalary);
         return new PayrollImpl(employee, period, paymentConcepts, netSalary);
     }
 
-    private void validate(Employee employee, YearMonth period, List<PaymentConcept> paymentConcepts, BigDecimal netSalary) throws PayrollException {
+    private void validate(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts, BigDecimal netSalary) throws PayrollException {
         if (netSalary.compareTo(BigDecimal.ZERO) < FLAG_SALARY) {
             throw new PayrollException(NEGATIVE_NET_SALARY_ERROR);
         }

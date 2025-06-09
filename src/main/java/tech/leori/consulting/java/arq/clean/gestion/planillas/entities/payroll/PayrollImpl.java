@@ -2,7 +2,8 @@ package tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll;
 
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.generic.GenericDomain;
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.employee.Employee;
-import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.paymentConcept.PaymentConcept;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.PaymentConcept;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.PaymentPeriod;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
@@ -12,7 +13,7 @@ public class PayrollImpl extends GenericDomain implements IPayroll {
 
     private Long id;
     private Employee employee;
-    private YearMonth period;
+    private PaymentPeriod period;
     private List<PaymentConcept> paymentConcepts;
 
     private BigDecimal netSalary;
@@ -20,14 +21,14 @@ public class PayrollImpl extends GenericDomain implements IPayroll {
     private BigDecimal totalDeductions;
     private BigDecimal employerContribution;
 
-    public PayrollImpl(Employee employee, YearMonth period, List<PaymentConcept> paymentConcepts) {
+    public PayrollImpl(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts) {
 
         this.employee = employee;
         this.period = period;
         this.paymentConcepts = paymentConcepts;
     }
 
-    public PayrollImpl(Employee employee, YearMonth period, List<PaymentConcept> paymentConcepts, BigDecimal netSalary) {
+    public PayrollImpl(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts, BigDecimal netSalary) {
 
         this.employee = employee;
         this.period = period;
@@ -36,12 +37,17 @@ public class PayrollImpl extends GenericDomain implements IPayroll {
     }
 
     @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
     public Employee getEmployee() {
         return this.employee;
     }
 
     @Override
-    public YearMonth getPeriod() {
+    public PaymentPeriod getPeriod() {
         return this.period;
     }
 
