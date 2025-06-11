@@ -2,6 +2,7 @@ package tech.leori.consulting.java.arq.clean.gestion.planillas.entities.employee
 
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.enums.PensionType;
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.generic.GenericDomain;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.Amount;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ public class Employee extends GenericDomain {
     private LocalDate birthDate;
     private LocalDate entryDate;
     private LocalDate exitDate;
-    private BigDecimal baseSalary;
+    private Amount baseSalary;
     private PensionType pensionType;
     private boolean haveInsurance;
 
@@ -38,7 +39,7 @@ public class Employee extends GenericDomain {
         private LocalDate birthDate;
         private LocalDate entryDate;
         private LocalDate exitDate;
-        private BigDecimal baseSalary;
+        private Amount baseSalary;
         private PensionType pensionType;
         private boolean haveInsurance;
 
@@ -72,7 +73,7 @@ public class Employee extends GenericDomain {
             return this;
         }
 
-        public Builder baseSalary(BigDecimal baseSalary) {
+        public Builder baseSalary(Amount baseSalary) {
             this.baseSalary = baseSalary;
             return this;
         }
@@ -92,7 +93,7 @@ public class Employee extends GenericDomain {
                 throw new EmployeeException("Campos obligatorios son requeridos");
             }
 
-            if (baseSalary.compareTo(BigDecimal.ZERO) <= 0) {
+            if (baseSalary.getValue().compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("El sueldo base debe ser mayor a cero.");
             }
 
@@ -129,7 +130,7 @@ public class Employee extends GenericDomain {
         return exitDate;
     }
 
-    public BigDecimal getBaseSalary() {
+    public Amount getBaseSalary() {
         return baseSalary;
     }
 
@@ -153,10 +154,11 @@ public class Employee extends GenericDomain {
         return exitDate == null || exitDate.isAfter(LocalDate.now());
     }
 
-    public void updateSalary(BigDecimal newSalary) {
-        if (newSalary.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Sueldo inválido");
+    public void updateSalary(Amount newSalary) throws EmployeeException {
+        if (newSalary.getValue().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new EmployeeException("Sueldo inválido");
         }
+        //TODO: Implementar lógica para registrar el cambio de sueldo en el historial laboral
         // HistorialLaboralFactory.logCambio("baseSalary", this.baseSalary, newSalary);
         this.baseSalary = newSalary;
     }

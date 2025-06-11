@@ -2,28 +2,27 @@ package tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobj
 
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.enums.ConceptType;
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.generic.DomainException;
-import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.generic.GenericDomain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class PaymentConcept {
     private final String name;
-    private final BigDecimal amount;
+    private final Amount amount;
     private final ConceptType type;
 
-    private PaymentConcept(String name, BigDecimal amount, ConceptType type) {
+    private PaymentConcept(String name, Amount amount, ConceptType type) {
         this.name = name;
         this.amount = amount;
         this.type = type;
     }
 
-    public static PaymentConcept of(String name, BigDecimal amount, ConceptType type) throws DomainException {
+    public static PaymentConcept of(String name, Amount amount, ConceptType type) throws DomainException {
         if (name == null || name.trim().isEmpty()) {
             throw new DomainException("El nombre del concepto no puede estar vacío.");
         }
 
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+        if (amount == null || amount.getValue().compareTo(BigDecimal.ZERO) < 0) {
             throw new DomainException("El monto no puede ser negativo ni nulo.");
         }
 
@@ -38,7 +37,7 @@ public class PaymentConcept {
         return name;
     }
 
-    public BigDecimal getAmount() {
+    public Amount getAmount() {
         return amount;
     }
 

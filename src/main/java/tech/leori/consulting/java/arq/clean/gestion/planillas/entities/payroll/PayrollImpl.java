@@ -2,6 +2,7 @@ package tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll;
 
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.generic.GenericDomain;
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.employee.Employee;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.Amount;
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.PaymentConcept;
 import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.PaymentPeriod;
 
@@ -16,10 +17,10 @@ public class PayrollImpl extends GenericDomain implements IPayroll {
     private PaymentPeriod period;
     private List<PaymentConcept> paymentConcepts;
 
-    private BigDecimal netSalary;
-    private BigDecimal totalIncome;
-    private BigDecimal totalDeductions;
-    private BigDecimal employerContribution;
+    private Amount netSalary;
+    private Amount totalIncome;
+    private Amount totalDeductions;
+    private Amount employerContribution;
 
     public PayrollImpl(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts) {
 
@@ -28,7 +29,7 @@ public class PayrollImpl extends GenericDomain implements IPayroll {
         this.paymentConcepts = paymentConcepts;
     }
 
-    public PayrollImpl(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts, BigDecimal netSalary) {
+    public PayrollImpl(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts, Amount netSalary) {
 
         this.employee = employee;
         this.period = period;
@@ -57,22 +58,22 @@ public class PayrollImpl extends GenericDomain implements IPayroll {
     }
 
     @Override
-    public BigDecimal netSalary() {
+    public Amount netSalary() {
         return this.netSalary;
     }
 
     @Override
-    public BigDecimal getTotalIncome() {
+    public Amount getTotalIncome() {
         return this.totalIncome;
     }
 
     @Override
-    public BigDecimal getTotalDeductions() {
+    public Amount getTotalDeductions() {
         return this.totalDeductions;
     }
 
     @Override
-    public BigDecimal getEmployerContribution() {
+    public Amount getEmployerContribution() {
         return this.employerContribution;
     }
 }

@@ -1,4 +1,4 @@
-package tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payrollPayment;
+package tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll_payment;
 
 public enum PayState {
     PENDING(1, "Pending"),
