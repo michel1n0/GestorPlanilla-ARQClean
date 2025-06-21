@@ -1,0 +1,53 @@
+package tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll;
+
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.employee.Employee;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.Amount;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.PaymentConcept;
+import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.valueobject.PaymentPeriod;
+
+import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.List;
+
+import static java.util.Objects.isNull;
+import static tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll.Constants.NEGATIVE_NET_SALARY_ERROR;
+import static tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll.Constants.NULL_EMPLOYEE_ERROR;
+import static tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll.Constants.NULL_PAYMENT_CONCEPTS_ERROR;
+import static tech.leori.consulting.java.arq.clean.gestion.planillas.entities.payroll.Constants.NULL_PERIOD_ERROR;
+
+public class PayrollFactoryImpl implements PayrollFactory {
+
+
+
+    private static final int FLAG_SALARY = 0;
+
+    @Override
+    public IPayroll create(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts, Amount netSalary) throws PayrollException {
+
+        this.validate(employee, period, paymentConcepts, netSalary);
+        return new PayrollImpl(employee, period, paymentConcepts, netSalary);
+    }
+
+    @Override
+    public IPayroll create(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts) throws PayrollException {
+
+        Amount netSalary = new Amount(BigDecimal.ZERO, Currency.getInstance("PEN"));
+        this.validate(employee, period, paymentConcepts, netSalary);
+        return new PayrollImpl(employee, period, paymentConcepts, netSalary);
+    }
+
+    private void validate(Employee employee, PaymentPeriod period, List<PaymentConcept> paymentConcepts, Amount netSalary) throws PayrollException {
+        if (netSalary.getValue().compareTo(BigDecimal.ZERO) < FLAG_SALARY) {
+            throw new PayrollException(NEGATIVE_NET_SALARY_ERROR);
+        }
+        if (isNull(paymentConcepts) || paymentConcepts.isEmpty()) {
+            throw new PayrollException(NULL_PAYMENT_CONCEPTS_ERROR);
+        }
+        if (isNull(employee)) {
+            throw new PayrollException(NULL_EMPLOYEE_ERROR);
+        }
+        if (isNull(period)) {
+            throw new PayrollException(NULL_PERIOD_ERROR);
+        }
+    }
+}
