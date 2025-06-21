@@ -10,15 +10,15 @@ import java.time.Period;
 
 public class Employee extends GenericDomain {
 
-    private Long id;
-    private String name;
-    private String lastName;
-    private LocalDate birthDate;
-    private LocalDate entryDate;
-    private LocalDate exitDate;
+    private final Long id;
+    private final String name;
+    private final String lastName;
+    private final LocalDate birthDate;
+    private final LocalDate entryDate;
+    private final LocalDate exitDate;
     private Amount baseSalary;
-    private PensionType pensionType;
-    private boolean haveInsurance;
+    private final PensionType pensionType;
+    private final boolean haveInsurance;
 
     private Employee(Builder builder) {
         this.id = builder.id;

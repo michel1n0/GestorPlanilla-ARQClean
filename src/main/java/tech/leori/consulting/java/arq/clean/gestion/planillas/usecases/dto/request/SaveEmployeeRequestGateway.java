@@ -5,13 +5,13 @@ import tech.leori.consulting.java.arq.clean.gestion.planillas.entities.enums.Pen
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record SaveEmployeeRequestDTO(
+public record SaveEmployeeRequestGateway(
          String name,
          String lastName,
          LocalDate birthDate,
          LocalDate entryDate,
          BigDecimal baseSalary,
-         String currency,
+         String Currency,
          PensionType pensionType,
          boolean haveInsurance
 ) {
